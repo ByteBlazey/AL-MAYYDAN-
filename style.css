@@ -1,0 +1,840 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.gold{
+  color: gold;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Amiri', serif;
+  height: 100px;
+  align-items: center;
+  background-color: rgb(84, 251, 84);
+  padding: 1rem;
+}
+
+.nav-left p {
+    font-family: 'Amiri', serif;
+}
+
+.nav-left{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-left img{
+  width: 100px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.nav-right ul{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  gap: 2rem;
+} 
+
+.nav-right ul li a{
+  text-decoration: none;
+  color: black;
+  font-size: 1.2rem;
+  font-family: 'Amiri', serif;
+}
+
+
+.nav-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 1rem;
+}
+
+/* Media query for mobile devices */
+@media screen and (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-right {
+        position: fixed;
+        top: 100px;
+        right: -250px;
+        width: 250px;
+        height: calc(100vh - 100px);
+        background-color: rgba(84, 251, 84, 0.8); /* Semi-transparent background */
+        backdrop-filter: blur(0.3px); /* Blur effect */
+        -webkit-backdrop-filter: blur(8px); /* For Safari */
+        transition: right 0.3s ease;
+        z-index: 9999;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-right.active {
+        right: 0;
+    }
+
+    .nav-right ul {
+        flex-direction: column;
+        padding: 2rem;
+    }
+
+    .nav-right ul li {
+        margin: 1rem 0;
+        width: 100%;
+        text-align: right; /* Align text to the right */
+    }
+
+    .nav-right ul li a {
+        display: block;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+        color: black; /* Ensure text remains visible */
+        font-weight: 600; /* Make text more visible against transparent background */
+    }
+
+    .nav-right ul li a:hover {
+        background-color: rgba(255,255,255,0.3); /* Lighter hover effect */
+        border-radius: 5px;
+    }
+}
+
+main{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+
+.overlay-color {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(2, 53, 2, 0.5); /* Green with 50% opacity */
+  z-index: 2;
+}
+
+.hero{
+  height: 100vh;
+  background-image: url(main-bg.jpg);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-content{
+  color: white;
+  font-family: 'Amiri', serif;
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  z-index: 5;
+}
+
+.hero-content h1{
+  font-weight: bolder;
+  font-size: 3rem;
+}
+
+@media screen and (max-width: 768px) {
+.hero-content h1{
+    font-size: 2.5rem;
+  }
+}
+
+.hero-txt{
+  z-index: 5;
+  color: white;
+  margin-top: 3rem;
+  font-size: 20px;
+  max-width: 600px;
+  margin: 3rem auto;
+  font-size: 20px;
+}
+
+.hero-btns{
+  margin-top: 2rem;
+  z-index: 5;
+}
+
+.btn-primary{
+  background-color: gold;
+  padding: 10px 5px;
+  border-radius: 10px;
+  color: Black;
+  text-decoration: none;
+  font-weight: 400;
+  margin-right: 2rem;
+}
+
+.btn-secondary{
+  background-color: transparent;
+  padding: 10px 5px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: 400;
+  border: 2px solid white;
+}
+
+.btn-secondary:hover{
+  background-color: white;
+  color: black;
+  transition: 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+  .hero-btns{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center ;
+  }
+
+  .btn-primary, .btn-secondary{
+    margin: 0;
+    width: 150px;
+  }
+}
+
+
+
+
+
+/* Add at the top after existing imports */
+.hidden {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateX(-100%);
+  transition: all 1s;
+}
+
+.show {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0);
+}
+
+/* Add animation delays for list items */
+.nav-right ul li {
+  transition-delay: calc(0.2s * var(--order));
+}
+
+/* Add animation for nav items */
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+nav {
+  animation: slideDown 1s ease-out;
+}
+
+/* Hero content animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-content, .hero-txt, .hero-btns {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.hero-content.show {
+  animation: fadeIn 1s forwards;
+}
+
+.hero-txt.show {
+  animation: fadeIn 1s 0.3s forwards;
+}
+
+.hero-btns.show {
+  animation: fadeIn 1s 0.6s forwards;
+}
+
+/* Add hover animations for buttons */
+.btn-primary, .btn-secondary {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.about{
+  padding-top: 7rem;
+  text-align: center;
+  font-size: 1.7rem;
+  background-color: rgb(254, 247, 238);
+}
+
+span{
+  color: gold;
+}
+
+.abt-txt{
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 3rem auto;
+  color: grey;
+}
+
+.About-cards{
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  /* margin-bottom: 5rem; */
+  flex-wrap: wrap;
+  padding-bottom: 5rem;
+}
+
+.card{
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 450px;
+}
+
+.card i{
+  margin-bottom: 2rem;
+  color: green;
+}
+
+.card{
+  margin-bottom: 1rem;
+}
+
+.card h3{
+  font-family: 'Amiri', serif;
+}
+
+.card p{
+  font-size: 20px;
+  margin-top: 2rem;
+  color: grey;
+}
+
+.big-card{
+  background-color: white;
+  max-width: 1200px;
+  padding: 2rem;
+  border-radius: 10px;
+
+  margin-bottom: 2rem;
+}
+
+.big-card h3{
+  margin-bottom: 2rem;
+  font-family: 'Amiri', serif;
+}
+
+.big-card p{
+  font-size: 20px;
+  color: grey;
+  line-height: 1.6;
+}
+
+.pp{
+  margin-bottom: 1rem;
+}
+
+.big-card b{
+  color: black;
+}
+
+
+/* Add animations for .about container items */
+.about .hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(4px);
+  transition: opacity 600ms ease, transform 600ms ease, filter 600ms ease;
+}
+
+.about .show {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Stagger cards and about items using --order */
+.About-cards .card,
+.about .about-content,
+.about .abt-txt,
+.about .big-card,
+.About-cards {
+  /* default transition-delay uses --order below (set by JS) */
+  transition-delay: calc(0.12s * var(--order));
+}
+
+/* Slightly different look for cards when they appear */
+.About-cards .card {
+  transform-origin: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* ensure large elements animate smoothly */
+.big-card {
+  will-change: transform, opacity, filter;
+}
+
+/* .programs{
+  background-color: rgb(255, 250, 243);
+  padding-top: 5rem;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.pr-cards{
+  display: flex;
+  justify-content: center;
+}
+
+.pr-card{
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.pr-card img{
+  width: 100%;
+} */
+
+.programs{
+  background-color: rgb(255, 250, 243);
+  padding: 4rem 1rem 6rem;
+  display: block;
+}
+
+/* container for programs content */
+.prgram-content{
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+/* paragraph under heading */
+.prg-txt{
+  max-width: 900px;
+  margin: 1rem auto 2rem;
+  color: grey;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* cards wrapper — responsive flexbox */
+.prgram-cards{
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.prgram-content h2{
+  font-size: 2rem;
+  font-family: 'Amiri', serif;
+}
+
+.prgram-content .prg-txt{
+  margin-left: 10%;
+  width: 100%;
+}
+
+/* individual program card */
+.pr-card{
+  background-color: white;
+  padding: 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  max-width: 600px;
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* image inside card */
+.pr-card img{
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* card heading and text */
+.pr-card h3{
+  margin: 0;
+  font-size: 1.5rem;
+  font-family: 'Amiri', serif;
+}
+
+.pr-card p{
+  margin: 0;
+  color: grey;
+  font-size: 0.98rem;
+}
+
+/* list in card */
+.pr-card ul{
+  text-align: left;
+  margin: 0.5rem 0 0 1.1rem;
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* responsive tweaks */
+@media screen and (max-width: 768px) {
+  .prgram-cards{
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .pr-card{
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .pr-card img{
+    height: 160px;
+  }
+}
+
+/* Add these animation rules after your existing animations */
+
+/* Programs section animations */
+.programs .hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(5px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.programs .show {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Specific animations for different elements */
+.programs h2.hidden {
+  transform: translateY(-30px);
+}
+
+.prg-txt.hidden {
+  transform: translateX(-50px);
+}
+
+.pr-card.hidden {
+  transform: translateY(50px) scale(0.95);
+}
+
+.pr-card img.hidden {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.6s ease-out;
+}
+
+.pr-card img.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Add transition delays based on order */
+.programs h2,
+.prg-txt,
+.pr-card {
+  transition-delay: calc(0.1s * var(--order));
+}
+
+.mission{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 5rem;
+  background-image: url(bg2.jpg);
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding-bottom: 5rem;
+}
+
+
+
+.mission-content h2{
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.msp{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  max-width: 600px;
+  margin: auto;
+}
+
+@media screen and (max-width: 768px){
+  .msp{
+    padding: 0 1rem;
+    margin-left: 4.3rem;
+  }
+}
+
+.msp p{
+  color: grey;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+
+.mission-cards{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.mission-crd{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  background-color: aliceblue;
+  max-width: 400px;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.mission-crd i{
+  color: green;
+  margin-bottom: 1rem;
+}
+
+.mission-crd h3{
+  font-family: 'Amiri', serif;
+  font-size: 1.2rem;
+}
+
+.mission-crd p{
+  color: grey;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.mission-crd span{
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.mission-crd a{
+  text-decoration: none;
+  color: white;
+  background-color: green;
+  width: 70%;
+  padding: 7px;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.mis-big{
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  max-width: 1200px;
+}
+
+.mis-big h3,h2{
+  font-family: 'Amiri', serif;
+  margin-top: 2rem;
+}
+
+.mis-go{
+  display: flex;
+  /* gap: 2rem; */
+  justify-content: space-between;
+  text-align: left;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) {
+  .mis-go{
+    flex-direction: column;
+  }
+}
+
+.mis-go p{
+  color: grey;
+  line-height: 1.6;
+}
+
+/* .mis-go .left,  */.mis-go .right{
+  flex: 1;
+  width: 400px;
+}
+
+.preach{
+  background-color: rgb(241, 255, 241);
+  text-align: center;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  color: grey;
+}
+
+
+/* Add after your existing animation rules */
+
+/* Mission section animations */
+.mission .hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(5px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mission .show {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Specific animations for different elements */
+.mission-content h2.hidden {
+  transform: translateY(-30px);
+}
+
+.msp.hidden {
+  transform: translateX(-50px);
+}
+
+.mission-crd.hidden {
+  transform: translateY(50px) scale(0.95);
+}
+
+.mis-big.hidden {
+  transform: translateY(30px) scale(0.98);
+}
+
+/* Add transition delays based on order */
+.mission h2,
+.msp,
+.mission-crd,
+.mis-big {
+  transition-delay: calc(0.15s * var(--order));
+}
+
+/* Hover effects */
+.mission-crd {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mission-crd:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.mission-crd a {
+  transition: background-color 0.3s ease;
+}
+
+.mission-crd a:hover {
+  background-color: darkgreen;
+}
+
+.footer-content{
+  background-color: rgb(2, 53, 2);
+  padding: 2rem 1rem;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-content h1,h3,h3{
+  color: white;
+  font-family: 'Amiri', serif;
+}
+
+.footer-content p{
+  color: grey;
+  font-weight: 700;
+}
+
+.footer-content .name{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-content .name img{
+  width: 80px;
+  border-radius: 50%;
+}
+
+@media screen and (max-width: 768px){
+  .footer-content .name h1{
+    font-size: 1.2rem;
+  }
+}
+
+.reg{
+  margin: 2rem 0;
+}
+
+.contact p{
+  margin: 0.5rem 0;
+}
